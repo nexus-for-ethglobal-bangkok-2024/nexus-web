@@ -1,0 +1,168 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                String   @id @default(uuid())
+  name              String
+  email             String   @unique
+  password          String
+
+  crossAssetWallet  CrossAssetWallet?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CrossAssetWallet {
+  id                    String   @id @default(uuid())
+  userId                String   @unique
+  user                  User     @relation(fields: [userId], references: [id])
+  stockHoldings         StockInUserCrossAssetWallet[]
+  forexHoldings         ForexInUserCrossAssetWallet[]
+  cryptoHoldings        CryptoInUserCrossAssetWallet[]
+}
+
+model StockReference {
+  id            String   @id @default(uuid())
+  name          String
+  symbol        String   @unique
+  exchangeName  String
+  holdings      StockInUserCrossAssetWallet[]
+  buyTrades     StockBuySellTransaction[] @relation("StockBuyTrades")
+}
+
+model StockInUserCrossAssetWallet {
+  id                String          @id @default(uuid())
+  walletId          String
+  wallet            CrossAssetWallet @relation(fields: [walletId], references: [id])
+  stockReferenceId  String
+  stockReference    StockReference   @relation(fields: [stockReferenceId], references: [id])
+  quantity          Decimal
+
+  @@unique([walletId, stockReferenceId])
+}
+
+model ForexReference {
+  id            String   @id @default(uuid())
+  name          String
+  symbol        String   @unique
+  holdings      ForexInUserCrossAssetWallet[]
+  buyTrades     ForexBuySellTransaction[] @relation("ForexBuyTrades")
+  swapTrades    ForexSwappingTransaction[] @relation("ForexSwapTrades")
+  liquidityPool ForexLiquidityPool?
+}
+
+model ForexInUserCrossAssetWallet {
+  id                String          @id @default(uuid())
+  walletId          String
+  wallet            CrossAssetWallet @relation(fields: [walletId], references: [id])
+  forexReferenceId  String
+  forexReference    ForexReference   @relation(fields: [forexReferenceId], references: [id])
+  quantity          Decimal
+
+  @@unique([walletId, forexReferenceId])
+}
+
+model CryptoReference {
+  id              String   @id @default(uuid())
+  name            String
+  symbol          String   @unique
+  blockchainName  String
+  holdings        CryptoInUserCrossAssetWallet[]
+  buyTrades       CryptoBuySellTransaction[] @relation("CryptoBuyTrades")
+  swapTrades      CryptoSwappingTransaction[] @relation("CryptoSwapTrades")
+  liquidityPool   CryptoLiquidityPool?
+}
+
+model CryptoInUserCrossAssetWallet {
+  id                String          @id @default(uuid())
+  walletId          String
+  wallet            CrossAssetWallet @relation(fields: [walletId], references: [id])
+  cryptoReferenceId String
+  cryptoReference   CryptoReference  @relation(fields: [cryptoReferenceId], references: [id])
+  quantity          Decimal
+
+  @@unique([walletId, cryptoReferenceId])
+}
+
+model StockBuySellTransaction {
+  id                String          @id @default(uuid())
+  sellerId          String
+  buyerId           String
+  quantity          Decimal
+  totalAmount       Decimal
+  stockReferenceId  String
+  stockReference    StockReference   @relation("StockBuyTrades", fields: [stockReferenceId], references: [id])
+  createdAt         DateTime        @default(now())
+}
+
+model ForexBuySellTransaction {
+  id                String          @id @default(uuid())
+  sellerId          String
+  buyerId           String
+  quantity          Decimal
+  totalAmount       Decimal
+  forexReferenceId  String
+  forexReference    ForexReference   @relation("ForexBuyTrades", fields: [forexReferenceId], references: [id])
+  createdAt         DateTime        @default(now())
+}
+
+model ForexSwappingTransaction {
+  id                String          @id @default(uuid())
+  acquirerId        String
+  quantity          Decimal
+  totalAmount       Decimal
+  forexReferenceId  String
+  forexReference    ForexReference   @relation("ForexSwapTrades", fields: [forexReferenceId], references: [id])
+  createdAt         DateTime        @default(now())
+}
+
+model CryptoBuySellTransaction {
+  id                String          @id @default(uuid())
+  sellerId          String
+  buyerId           String
+  quantity          Decimal
+  totalAmount       Decimal
+  cryptoReferenceId String
+  cryptoReference   CryptoReference  @relation("CryptoBuyTrades", fields: [cryptoReferenceId], references: [id])
+  createdAt         DateTime        @default(now())
+}
+
+model CryptoSwappingTransaction {
+  id                String          @id @default(uuid())
+  acquirerId        String
+  quantity          Decimal
+  totalAmount       Decimal
+  cryptoReferenceId String
+  cryptoReference   CryptoReference  @relation("CryptoSwapTrades", fields: [cryptoReferenceId], references: [id])
+  createdAt         DateTime        @default(now())
+}
+
+model CryptoLiquidityPool {
+  id                String          @id @default(uuid())
+  cryptoReferenceId String          @unique
+  cryptoReference   CryptoReference @relation(fields: [cryptoReferenceId], references: [id])
+  quantity          Decimal
+  pricePerCrypto    Decimal
+}
+
+model ForexLiquidityPool {
+  id                String          @id @default(uuid())
+  forexReferenceId  String          @unique
+  forexReference    ForexReference  @relation(fields: [forexReferenceId], references: [id])
+  quantity          Decimal
+  pricePerForex     Decimal
+}
+
