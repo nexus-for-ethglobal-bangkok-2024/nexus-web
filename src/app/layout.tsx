@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { BarChart2, Home, User } from "lucide-react";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -28,7 +31,41 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+         <div className="flex flex-col min-h-screen">
+      <header className="border-b">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between h-16">
+            <Link href="/" className="flex items-center space-x-2">
+              <BarChart2 className="h-6 w-6" />
+              <span className="font-bold text-xl">Nexus</span>
+            </Link>
+            <nav className="flex items-center space-x-4">
+              <Button variant="ghost" asChild>
+                <Link href="/dashboard/market-overview">
+                  <Home className="h-4 w-4 mr-2" />
+                  Dashboard
+                </Link>
+              </Button>
+              <Button variant="ghost" asChild>
+                <Link href="/dashboard/market-overview">
+                  <BarChart2 className="h-4 w-4 mr-2" />
+                  Trade Now
+                </Link>
+              </Button>
+              <Button variant="ghost" asChild>
+                <Link href="/account">
+                  <User className="h-4 w-4 mr-2" />
+                  Account
+                </Link>
+              </Button>
+            </nav>
+          </div>
+        </div>
+      </header>
+      <main className="flex-1 container mx-auto px-4 py-8">
         {children}
+      </main>
+    </div>
       </body>
     </html>
   );
