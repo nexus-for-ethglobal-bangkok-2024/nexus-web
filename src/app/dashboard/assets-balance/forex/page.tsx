@@ -136,7 +136,6 @@ export default function  AssetsOverviewForexPage () {
 interface AssetCardProps {
   symbol: string;
   name: string;
-  exchange: string;
   quantity: string;
 }
 
