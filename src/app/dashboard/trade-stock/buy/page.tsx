@@ -80,7 +80,7 @@ export default function  StockBuyPage () {
   const handleBuyWithCrypto = (symbol: string) => {
     // Mock route change
     alert(`Redirecting to crypto purchase page for ${symbol}...`)
-    router.push(`http://localhost:3000/dashboard/trade-stock/buy/buy-with-crypto`)
+    router.push(`${process.env.NEXT_PUBLIC_BASE_URL}/dashboard/trade-stock/buy/buy-with-crypto`)
     
   }
 
