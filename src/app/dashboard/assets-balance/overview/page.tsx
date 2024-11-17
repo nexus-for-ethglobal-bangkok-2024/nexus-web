@@ -98,6 +98,7 @@ function StockSection() {
         change={2.5}
         shares={10}
         value={1502.50}
+        amount="20"
       />
       <AssetCard
         title="MSFT"
@@ -106,6 +107,7 @@ function StockSection() {
         change={1.8}
         shares={5}
         value={1403.75}
+        amount="30"
       />
       <AssetCard
         title="GOOGL"
@@ -114,6 +116,7 @@ function StockSection() {
         change={1.2}
         shares={2}
         value={5500.00}
+        amount="26"
       />
       <AssetCard
         title="AMZN"
@@ -122,6 +125,7 @@ function StockSection() {
         change={-0.5}
         shares={1}
         value={3300.00}
+        amount="28"
       />
       <AssetCard
         title="TSLA"
@@ -130,6 +134,7 @@ function StockSection() {
         change={3.1}
         shares={4}
         value={2600.00}
+        amount="22"
       />
       
 
@@ -167,6 +172,7 @@ function CryptoSection() {
         change={-1.2}
         amount="0.5 BTC"
         value={22625.00}
+        shares="22"
       />
       <AssetCard
         title="ETH"
@@ -175,6 +181,7 @@ function CryptoSection() {
         change={0.8}
         amount="2 ETH"
         value={6300.00}
+        shares="22"
       />
       <AssetCard
         title="ADA"
@@ -183,6 +190,7 @@ function CryptoSection() {
         change={2.1}
         amount="1000 ADA"
         value={1250.00}
+        shares="22"
       />
       <AssetCard
         title="DOT"
@@ -191,6 +199,7 @@ function CryptoSection() {
         change={-0.5}
         amount="100 DOT"
         value={2050.00}
+        shares="22"
       />
       <AssetCard
         title="XRP"
@@ -199,6 +208,7 @@ function CryptoSection() {
         change={1.5}
         amount="5000 XRP"
         value={3750.00}
+        shares="22"
       />
     </div>
   )
@@ -233,6 +243,7 @@ function ForexSection() {
         change={0.3}
         amount="10,000 EUR"
         value={12150.00}
+        shares="22"
       />
       <AssetCard
         title="GBP/USD"
@@ -241,6 +252,7 @@ function ForexSection() {
         change={0.1}
         amount="5,000 GBP"
         value={6925.00}
+        shares="22"
       />
       <AssetCard
         title="USD/JPY"
@@ -249,6 +261,7 @@ function ForexSection() {
         change={-0.2}
         amount="500,000 JPY"
         value={4535.15}
+        shares="22"
       />
       <AssetCard
         title="AUD/USD"
@@ -257,6 +270,7 @@ function ForexSection() {
         change={0.5}
         amount="10,000 AUD"
         value={7650.00}
+        shares="22"
       />
       <AssetCard
         title="USD/CAD"
@@ -265,6 +279,7 @@ function ForexSection() {
         change={-0.1}
         amount="10,000 USD"
         value={12450.00}
+        shares="22"
       />
     </div>
   )
