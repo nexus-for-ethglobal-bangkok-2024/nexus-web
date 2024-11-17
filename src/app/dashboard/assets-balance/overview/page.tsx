@@ -96,7 +96,7 @@ function StockSection() {
         description="Apple Inc."
         price={150.25}
         change={2.5}
-        shares={10}
+        shares="10"
         value={1502.50}
         amount="20"
       />
@@ -105,7 +105,7 @@ function StockSection() {
         description="Microsoft Corporation"
         price={280.75}
         change={1.8}
-        shares={5}
+        shares="5"
         value={1403.75}
         amount="30"
       />
@@ -114,7 +114,7 @@ function StockSection() {
         description="Alphabet Inc."
         price={2750.00}
         change={1.2}
-        shares={2}
+        shares="26"
         value={5500.00}
         amount="26"
       />
@@ -123,7 +123,7 @@ function StockSection() {
         description="Amazon.com Inc."
         price={3300.00}
         change={-0.5}
-        shares={1}
+        shares="28"
         value={3300.00}
         amount="28"
       />
@@ -132,7 +132,7 @@ function StockSection() {
         description="Tesla Inc."
         price={650.00}
         change={3.1}
-        shares={4}
+        shares="4"
         value={2600.00}
         amount="22"
       />
@@ -285,7 +285,17 @@ function ForexSection() {
   )
 }
 
-function AssetCard({ title, description, price, change, shares, amount, value }) {
+interface AssetCardProps {
+  title: string;
+  description: string;
+  price: number;
+  change: number;
+  shares?:string;  // Optional, as you might want to show either shares or amount
+  amount?: string;  // Optional, as you might want to show either shares or amount
+  value: number;
+}
+
+function AssetCard({ title, description, price, change, shares, amount, value }:AssetCardProps) {
   return (
     <Card>
       <CardHeader>
